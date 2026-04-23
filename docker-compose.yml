@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: olist_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB:       olist
+      POSTGRES_USER:     olist_user
+      POSTGRES_PASSWORD: olist_pass
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - olist_network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: olist_pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL:    seckhalifaa@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5051:80"
+    depends_on:
+      - postgres
+    networks:
+      - olist_network
+
+networks:
+  olist_network:
+    driver: bridge
+
+volumes:
+  pgdata:
