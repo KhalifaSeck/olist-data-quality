@@ -21,6 +21,12 @@ models:
     marts:
       +schema: marts
       +materialized: table
+      dimensions:
+        +schema: marts
+        +materialized: table
+      facts:
+        +schema: marts
+        +materialized: table
     quality:
       +schema: quality
       +materialized: table

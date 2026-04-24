@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: fct_orders
+    description: "Fact table principale — une ligne par commande"
+    columns:
+      - name: order_id
+        tests: [not_null, unique]
+      - name: customer_id
+        tests: [not_null]
+
+  - name: fct_order_items
+    description: "Fact table items — une ligne par item"
+    columns:
+      - name: order_id
+        tests: [not_null]
+
+  - name: mart_sales
+    description: "Agrégat ventes quotidien"
+
+  - name: mart_customers_rfm
+    description: "Segmentation RFM clients"
+
+  - name: mart_marketing
+    description: "Performance leads marketing"

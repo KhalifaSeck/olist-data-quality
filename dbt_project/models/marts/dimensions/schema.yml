@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: "Dimension clients"
+    columns:
+      - name: customer_id
+        tests: [not_null, unique]
+
+  - name: dim_products
+    description: "Dimension produits"
+    columns:
+      - name: product_id
+        tests: [not_null, unique]
+
+  - name: dim_sellers
+    description: "Dimension vendeurs"
+    columns:
+      - name: seller_id
+        tests: [not_null, unique]
+
+  - name: dim_date
+    description: "Dimension date"
+    columns:
+      - name: date_day
+        tests: [not_null, unique]
