@@ -9,7 +9,11 @@ renamed as (
         product_id::text        as product_id,
         seller_id::text         as seller_id,
         price::numeric          as price,
-        freight_value::numeric  as freight_value
+        freight_value::numeric  as freight_value,
+
+        -- Colonne total ajoutée comme dans le notebook
+        price::numeric +
+        freight_value::numeric  as total
     from source
 )
 

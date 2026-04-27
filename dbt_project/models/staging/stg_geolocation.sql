@@ -2,14 +2,16 @@ with source as (
     select * from raw.geolocation
 ),
 
-renamed as (
+-- Moyenne lat/lng par zip_code pour éliminer les doublons
+deduplicated as (
     select
-        geolocation_zip_code_prefix     as zip_code,
-        geolocation_lat::numeric        as latitude,
-        geolocation_lng::numeric        as longitude,
-        geolocation_city                as city,
-        geolocation_state               as state
+        geolocation_zip_code_prefix             as zip_code,
+        avg(geolocation_lat::numeric)           as latitude,
+        avg(geolocation_lng::numeric)           as longitude,
+        max(geolocation_city)                   as city,
+        max(geolocation_state)                  as state
     from source
+    group by geolocation_zip_code_prefix
 )
 
-select * from renamed
+select * from deduplicated

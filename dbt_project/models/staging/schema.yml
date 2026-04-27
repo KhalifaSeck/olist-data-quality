@@ -14,8 +14,9 @@ models:
       - name: order_status
         tests:
           - accepted_values:
-              values: ["delivered", "shipped", "canceled", "unavailable",
-                       "invoiced", "processing", "created", "approved"]
+              arguments:
+                values: ["delivered", "shipped", "canceled", "unavailable",
+                         "invoiced", "processing", "created", "approved"]
 
   - name: stg_order_items
     description: "Items de commande nettoyés"
@@ -43,13 +44,6 @@ models:
           - not_null
           - unique
 
-  - name: stg_marketing_leads
-    description: "Leads marketing qualifiés"
-    columns:
-      - name: lead_id
-        tests:
-          - not_null
-          - unique
   - name: stg_sellers
     description: "Vendeurs nettoyés"
     columns:
@@ -98,3 +92,11 @@ models:
       - name: category_name_portuguese
         tests:
           - not_null
+
+  - name: stg_marketing_leads
+    description: "Leads marketing qualifiés"
+    columns:
+      - name: lead_id
+        tests:
+          - not_null
+          - unique

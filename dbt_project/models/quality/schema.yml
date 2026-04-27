@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: check_order_consistency
+    description: "Détecte les livraisons avant achat"
+
+  - name: check_zero_revenue
+    description: "Détecte les commandes livrées sans revenu"
+
+  - name: check_duplicate_items
+    description: "Détecte les doublons dans order_items"
+
+  - name: check_orphan_orders
+    description: "Détecte les commandes sans client associé"
+
+  - name: check_negative_prices
+    description: "Détecte les prix négatifs ou nuls"
+
+  - name: check_stale_orders
+    description: "Détecte les commandes expédiées sans livraison depuis 30j"
+
+  - name: quality_summary
+    description: "Résumé consolidé de toutes les anomalies"
