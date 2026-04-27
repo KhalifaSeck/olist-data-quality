@@ -1,7 +1,3 @@
-"""
-Alertes email via smtplib avec rapport Excel en pièce jointe.
-DRY_RUN=false → envoi réel avec pièce jointe Excel.
-"""
 import os
 import smtplib
 import logging
