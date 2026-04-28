@@ -1,0 +1,57 @@
+name: dbt build & test
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "dbt_project/**"
+
+jobs:
+  dbt:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: olist
+          POSTGRES_USER: olist_user
+          POSTGRES_PASSWORD: olist_pass
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dbt
+        run: pip install dbt-postgres==1.10.0
+
+      - name: dbt debug
+        working-directory: dbt_project
+        run: dbt debug --profiles-dir .
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5433
+          DB_NAME: olist
+          DB_USER: olist_user
+          DB_PASSWORD: olist_pass
+
+      - name: dbt build
+        working-directory: dbt_project
+        run: dbt build --select staging --profiles-dir .
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5433
+          DB_NAME: olist
+          DB_USER: olist_user
+          DB_PASSWORD: olist_pass

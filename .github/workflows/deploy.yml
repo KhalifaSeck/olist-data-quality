@@ -1,0 +1,44 @@
+name: Deploy — Validate DAGs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "airflow/dags/**"
+
+jobs:
+  validate-dags:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Airflow
+        run: |
+          pip install apache-airflow==2.9.0
+          pip install pandas numpy psycopg2-binary python-dotenv openpyxl
+
+      - name: Validate DAGs syntax
+        run: |
+          python -c "
+          import ast
+          import pathlib
+          dags = list(pathlib.Path('airflow/dags').glob('*.py'))
+          errors = []
+          for f in dags:
+              try:
+                  ast.parse(f.read_text())
+                  print(f'OK: {f}')
+              except SyntaxError as e:
+                  errors.append(f'ERROR in {f}: {e}')
+          if errors:
+              for e in errors:
+                  print(e)
+              exit(1)
+          print('All DAGs syntax OK!')
+          "
