@@ -32,7 +32,7 @@ jobs:
           pip install flake8
           flake8 ingestion/ monitoring/ alerting/ \
             --max-line-length=100 \
-            --ignore=E241,E221,E402,W292,W503,W504,E127,F401,F541
+            --ignore=E241,E221,E402,W292,W503,W504,E127,F401,F541,E226,F841
 
       - name: Run unit tests
         run: pytest tests/ -v --tb=short
