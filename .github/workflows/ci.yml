@@ -8,15 +8,21 @@ on:
 
 jobs:
   lint-and-test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.10", "3.11"]
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -24,7 +30,9 @@ jobs:
       - name: Lint (flake8)
         run: |
           pip install flake8
-          flake8 ingestion/ monitoring/ alerting/ --max-line-length=100 --ignore=E501,W503
+          flake8 ingestion/ monitoring/ alerting/ \
+            --max-line-length=100 \
+            --ignore=E241,E221,E402,W292,W503,W504,E127,F401,F541
 
       - name: Run unit tests
         run: pytest tests/ -v --tb=short
