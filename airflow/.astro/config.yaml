@@ -1,0 +1,13 @@
+project:
+  name: airflow
+
+webserver:
+  port: 8081
+  
+mount_volumes:
+  - ../ingestion:/usr/local/airflow/ingestion
+  - ../monitoring:/usr/local/airflow/monitoring
+  - ../alerting:/usr/local/airflow/alerting
+  - ../dbt_project:/usr/local/airflow/dbt_project
+  - ../data:/usr/local/airflow/data
+  - ../.env:/usr/local/airflow/.env

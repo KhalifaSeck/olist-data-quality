@@ -43,8 +43,8 @@ def load_csv(conn, path: Path, table: str):
     df.columns = [c.lower().strip().replace(" ", "_") for c in df.columns]
 
     with conn.cursor() as cur:
-        # Supprimer la table si elle existe déjà
-        cur.execute(f"DROP TABLE IF EXISTS {table};")
+        # CASCADE pour supprimer les vues dépendantes
+        cur.execute(f"DROP TABLE IF EXISTS {table} CASCADE;")
 
         # Créer la table avec toutes les colonnes en TEXT
         cols = ", ".join(f'"{c}" TEXT' for c in df.columns)
