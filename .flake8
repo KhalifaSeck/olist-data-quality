@@ -1,0 +1,10 @@
+[flake8]
+max-line-length = 100
+ignore = E241,E221,E402,W292,W503,W504,E127,F401,F541,E226,F841
+exclude =
+    .git,
+    __pycache__,
+    dbt_project/,
+    airflow/,
+    data/,
+    venv/
