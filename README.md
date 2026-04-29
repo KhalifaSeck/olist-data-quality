@@ -151,8 +151,8 @@ python alerting/email_alert.py
 
 | Service    | URL                    | Credentials                          |
 |------------|------------------------|--------------------------------------|
-| PostgreSQL | `localhost:5433`       | `olist_user` / `olist_pass`          |
-| pgAdmin    | `http://localhost:5051`| `my_email@gmail.com` / `admin`    |
+| PostgreSQL | `localhost:5433`       | `<your_username>` / `<your_password>`         |
+| pgAdmin    | `http://localhost:5051`| `<your_email>` / `<your_password>`   |
 
 ### Connexion pgAdmin → PostgreSQL
 
@@ -160,8 +160,8 @@ python alerting/email_alert.py
 Host     : postgres      ← nom du service Docker
 Port     : 5432          ← port interne Docker
 Database : olist
-Username : olist_user
-Password : olist_pass
+Username : <your_username>
+Password : <your_password>
 ```
 
 ---
@@ -319,6 +319,7 @@ pytest tests/ -v --cov=monitoring --cov=ingestion
 ✅ .env.example avec placeholders uniquement
 ✅ Pas de credentials hardcodés dans le code
 ✅ Gmail App Password (pas le vrai mot de passe)
+⚠️ All credentials are managed via environment variables and are never stored in this repository.
 ```
 
 ---
@@ -332,16 +333,17 @@ Copie `.env.example` → `.env` et remplis les valeurs :
 DB_HOST=localhost          # host.docker.internal pour Airflow
 DB_PORT=5433
 DB_NAME=olist
-DB_USER=olist_user
-DB_PASSWORD=olist_pass
+DB_USER=<your_username>
+DB_PASSWORD=<your_password>
 
 # Email
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
-SMTP_USER=my_email@gmail.com
-SMTP_PASSWORD=my_app_password   # Gmail App Password (16 chars) with no space
-SMTP_SENDER=my_email@gmail.com
-SMTP_RECEIVER=my_email@gmail.com
+SMTP_USER=<your_email>
+SMTP_PASSWORD=<your_app_password> # Gmail App Password (16 chars) with no space
+SMTP_SENDER=<your_email>
+SMTP_RECEIVER=<your_email>
+
 
 # Mode
 DRY_RUN=true   # false pour envoi réel
