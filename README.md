@@ -56,46 +56,55 @@ olist-data-quality/
 │       ├── ci.yml                  # Lint + tests à chaque push
 │       ├── dbt_run.yml             # dbt build sur chaque PR
 │       └── deploy.yml              # Validation DAGs sur main
+│
 ├── airflow/
 │   ├── dags/
 │   │   ├── dag_daily_pipeline.py   # Pipeline complet (06h00)
-│   │   └── dag_quality_check.py    # Checks horaires
+│   │   └── dag_quality_check.py    # Checks qualité horaires
 │   ├── Dockerfile
 │   ├── requirements.txt
-│   └── .env                        # Variables Airflow Docker
-├── alerting/
-│   └── email_alert.py              # Email + Excel en pièce jointe
+│   └── .env                        # Variables Airflow
+│
+├── ingestion/
+│   ├── db_connector.py             # Connexion PostgreSQL
+│   └── load_olist.py               # Chargement CSV → raw.*
+│
 ├── dbt_project/
 │   ├── macros/
 │   │   └── generate_schema_name.sql
 │   ├── models/
-│   │   ├── staging/                # 11 vues nettoyées
+│   │   ├── staging/                # Données nettoyées (11 tables)
 │   │   ├── marts/
-│   │   │   ├── dimensions/         # dim_customers, dim_products, dim_sellers, dim_date
-│   │   │   └── facts/              # fct_orders, fct_order_items, mart_sales, mart_customers_rfm, mart_marketing
-│   │   └── quality/                # 7 checks d'anomalies
+│   │   │   ├── dimensions/         # dim_customers, dim_products...
+│   │   │   └── facts/              # fct_orders, mart_sales...
+│   │   └── quality/                # Checks d’anomalies
 │   ├── tests/
 │   ├── dbt_project.yml
 │   └── profiles.yml
-├── ingestion/
-│   ├── db_connector.py             # Connexion PostgreSQL
-│   └── load_olist.py               # Chargement CSV → raw.*
+│
 ├── monitoring/
-│   ├── anomaly_detection.py        # Z-score + WoW drop
-│   ├── business_rules.py           # Règles métier Python
-│   └── audit_logger.py             # Persistance audit_log
+│   ├── anomaly_detection.py        # Z-score + WoW
+│   ├── business_rules.py           # Règles métier
+│   └── audit_logger.py             # Audit log
+│
+├── alerting/
+│   └── email_alert.py              # Email + Excel
+│
 ├── tests/
 │   ├── test_ingestion.py
 │   ├── test_anomaly_detection.py
 │   └── test_business_rules.py
-├── docs/
-│   ├── architecture.md
-│   └── setup.md
-├── data/olist/                     # CSV Olist (non versionné)
+│
+├── data/
+│   └── olist/                      # CSV (non versionnés)
+│
+├── logs/                           # Logs Airflow / pipeline
 ├── docker-compose.yml              # PostgreSQL + pgAdmin
 ├── requirements.txt
 ├── .env.example
 ├── .gitignore
+├── .flake8
+├── conftest.py
 └── README.md
 ```
 
